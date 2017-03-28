@@ -17,7 +17,7 @@ object CheckOut {
     orangesToChargeFor * Orange().price
   }
 
-  private def buyOneGetOneFree[T](items: Seq[Fruit]): BigDecimal = {
+  private def buyOneGetOneFree(items: Seq[Fruit]): BigDecimal = {
     val apples = items.collect { case apple: Apple => apple }
     val applesToChargeFor = (apples.size / 2) + (apples.size % 2)
     applesToChargeFor * Apple().price
