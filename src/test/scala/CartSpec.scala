@@ -16,9 +16,27 @@ class CartSpec extends FunSpec {
   }
 
   describe("total price") {
-    it("should calculate the cost of all the items ") {
+    it("should calculate the cost of multiple the items ") {
       val exampleTrolley = Seq(Orange(), Apple())
       CheckOut.totalPrice(exampleTrolley) shouldEqual 85
+    }
+  }
+
+  describe("buy one get one free on Apples") {
+    it("should apply buy one get one free to apples") {
+      val twoApples = Seq(Apple(), Apple())
+      val threeApples = Seq(Apple(), Apple(), Apple())
+      val twoApplesOrange = Seq(Apple(), Apple(), Orange())
+      CheckOut.totalPrice(twoApples) shouldEqual 60
+      CheckOut.totalPrice(threeApples) shouldEqual 120
+      CheckOut.totalPrice(twoApplesOrange) shouldEqual 85
+    }
+  }
+
+  describe("3 for the price of 2 on oranges") {
+    it("should apply 3 for the price of 2 on oranges") {
+      val threeOranges = Seq(Orange(),Orange(),Orange())
+      CheckOut.totalPrice(threeOranges) shouldEqual 50
     }
   }
 
