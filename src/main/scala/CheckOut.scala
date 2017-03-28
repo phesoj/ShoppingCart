@@ -13,7 +13,7 @@ object CheckOut {
 
   def threeForTwo(items: Seq[Fruit]): BigDecimal = {
     val oranges = items.collect { case orange: Orange => orange }
-    val orangesToChargeFor = (2 * (oranges.size/3) + (oranges.size %3))
+    val orangesToChargeFor = 2 * (oranges.size / 3 ) + (oranges.size % 3)
     orangesToChargeFor * Orange().price
   }
 
