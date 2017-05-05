@@ -1,11 +1,10 @@
 sealed trait Fruit {
   def price : BigDecimal
   def priceWithOffers: (Int, BigDecimal) => BigDecimal
-  def classification: String
 }
 
-case class Apple(price: BigDecimal = .60, priceWithOffers: (Int, BigDecimal) => BigDecimal = Offers.buyOneGetOneFree, classification: String = "apple") extends Fruit
-case class Orange(price: BigDecimal = .25,  priceWithOffers: (Int, BigDecimal) => BigDecimal = Offers.threeForTwo, classification: String = "orange") extends Fruit
+case class Apple(price: BigDecimal = .60, priceWithOffers: (Int, BigDecimal) => BigDecimal = Offers.buyOneGetOneFree) extends Fruit
+case class Orange(price: BigDecimal = .25,  priceWithOffers: (Int, BigDecimal) => BigDecimal = Offers.threeForTwo) extends Fruit
 
 object Offers {
   def buyOneGetOneFree(numberOfItems: Int, price: BigDecimal): BigDecimal = {
@@ -21,8 +20,8 @@ object Offers {
 
 object CheckOut {
   val TypesOfFruit: Seq[Fruit] = Seq(Apple(), Orange())
-  def countNumberOfItems(items: Seq[Fruit], name: String) : Int = items.filter(item => item.classification.matches(name)).size
+  def countNumberOfItems(items: Seq[Fruit], name: Class[_ <: Fruit]) : Int = items.filter(item => item.getClass.equals(name)).size
 
   def totalPrice(shoppingCart: Seq[Fruit]) : BigDecimal =  TypesOfFruit.map ( typeOfFruit =>
-    typeOfFruit.priceWithOffers(countNumberOfItems(shoppingCart,typeOfFruit.classification), typeOfFruit.price)). sum
+    typeOfFruit.priceWithOffers(countNumberOfItems(shoppingCart,typeOfFruit.getClass), typeOfFruit.price)).sum
 }
