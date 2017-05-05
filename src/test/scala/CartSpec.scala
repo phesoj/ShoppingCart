@@ -40,4 +40,13 @@ class CartSpec extends FunSpec {
     }
   }
 
+  describe("should apply multiple offers") {
+    it("should apply 3 for the price of 2 on oranges") {
+      val threeOranges = Seq(Orange(),Orange(),Orange())
+      CheckOut.totalPrice(threeOranges) shouldEqual .50
+
+      val threeApples = Seq(Apple(), Apple(), Apple())
+      CheckOut.totalPrice(threeOranges ++ threeApples) shouldEqual 1.70
+    }
+  }
 }
