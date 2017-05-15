@@ -20,7 +20,7 @@ object Offers {
 
 object CheckOut {
   val TypesOfFruit: Seq[Fruit] = Seq(Apple(), Orange())
-  def countNumberOfItems(items: Seq[Fruit], name: Class[_ <: Fruit]) : Int = items.filter(item => item.getClass.equals(name)).size
+  def countNumberOfItems(items: Seq[Fruit], name: Class[_ <: Fruit]) : Int = items.count(item => item.getClass.equals(name))
 
   def totalPrice(shoppingCart: Seq[Fruit]) : BigDecimal =  TypesOfFruit.map ( typeOfFruit =>
     typeOfFruit.priceWithOffers(countNumberOfItems(shoppingCart,typeOfFruit.getClass), typeOfFruit.price)).sum
