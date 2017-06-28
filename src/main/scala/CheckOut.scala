@@ -31,9 +31,10 @@ case object Orange extends Fruit {
 }
 
 object CheckOut {
-  val TypesOfFruit: Seq[Fruit] = Seq(Apple, Orange)
-  def countNumberOfItems(items: Seq[Fruit], item: Fruit): Int = items.count(_ == item)
 
-  def totalPrice(shoppingCart: Seq[Fruit]): BigDecimal = TypesOfFruit.map(typeOfFruit =>
-    typeOfFruit.priceWithOffers(countNumberOfItems(shoppingCart, typeOfFruit), typeOfFruit.price)).sum
+  def summedItems(shoppingCart: Seq[Fruit]) = shoppingCart.map(item => item -> shoppingCart.count(_ == item)).distinct
+
+  def totalPrice(shoppingCart: Seq[Fruit]): BigDecimal = summedItems(shoppingCart).map {
+      case (fruit, totalCount) => fruit.priceWithOffers(totalCount, fruit.price)
+    }.sum
 }
